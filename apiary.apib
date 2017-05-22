@@ -13,58 +13,192 @@ Interface to consume data from the Property Management System
 
 + Response 200 (application/json)
 
-        [
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
-            }
-        ]
 
-## A property is a lettable property [/property/{property_id}]
+        {
+            "results": [
+                {
+                    "propId": "10006",
+                    "url": "http://private-5bb1f-pmsapi1.apiary-mock.com/property/pintail-cottage",
+                    "slug": "pintail-cottage",
+                    "name": "Pintail Cottage",
+                    "status": "approved",
+                    "address": {
+                                "house_no": "5",
+                                "street": "Pintail Avenue",
+                                "town": "Saltings Reach",
+                                "city": "Lelant",
+                                "county": "Cornwall",
+                                "postcode": "TR27 6GN"
+                            },
+                    "coordinates": {
+                        "latitude": 52.2345,
+                        "longitude": 1.2345
+                    },
+                    "location": {
+                        "id": "38",
+                        "name": "Lelant & Saltings Reach",
+                        "slug": "lelant-saltings"
+                    },
+                    "sleeps": 6,
+                    "bedrooms": {
+                        "total": 3,
+                        "superking": 0,
+                        "king": 0,
+                        "double": 1,
+                        "twin": 2,
+                        "zipnlock": 0,
+                        "other": 0,
+                        "information": ""
+                    },
+                    "bathrooms": {
+                        "en-suite":1,
+                        "standard":1,
+                        "wc":1,
+                        "other":0
+                    },
+                    "gemsRating": 4,
+                    "goLiveDate": "2016-05-09",
+                    "features": {
+                        "pets": true,
+                        "children": true,
+                        "disabled": false,
+                        "parking": true,
+                        "wifi": true,
+                        "crib": false,
+                        "seaviews": false,
+                        "closetobeach": true,
+                        "woodburner": true,
+                        "washingmachine": true,
+                        "tumbledryer": false,
+                        "pool": false,
+                        "cot": true
+                    }
+                    "managed": true,
+                    "minibreaks": true,
+                    "boutique": true,
+                    "changeOverDay": "Friday",
+                    "checkInTime": "4:30pm",
+                    "checkOutTime": "10:00am",
+                    "images": [
+                        {
+                            "filename": "001.jpg",
+                            "alt": "Pintail Cottage",
+                            "width": 640,
+                            "height": 480,
+                            "url": "https://assets.cornishgems.com/properties/pintail-cottage/001.jpg"
+                        }
+                    ],
+                    "specialOffers": [
+                         {
+                            "discountCode": "X10250517X",
+                            "fromDate": "2017-05-25",
+                            "toDate": "2017-06-01",
+                            "description": "10% Discount for week commencing 25th May 2017",
+                            "type": "%",
+                            "amount": 10
+                         }
+                    ],
+                    "calendar": "http://pmsapi1.apiary.io/property/pintail-cottage/calendar",
+                    "booking": "http://pmsapi1.apiary.io/booking"
+                }
+            ]
+        }
+
+
+## A property is a lettable property [/property/{slug}]
 
 + Parameters
-    + property_id (number) - reference ID of the property resource in the form of an integer
+    + slug (string) - reference slug of the property resource in the form of a string
 
 ### Retrieve an individual property resource [GET]
 
 + Response 200 (application/json)
 
-        [
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
+        {
+            "propId": "10006",
+            "url": "http://private-5bb1f-pmsapi1.apiary-mock.com/property/pintail-cottage",
+            "slug": "pintail-cottage",
+            "name": "Pintail Cottage",
+            "status": "approved",
+            "address": {
+                        "house_no": "5",
+                        "street": "Pintail Avenue",
+                        "town": "Saltings Reach",
+                        "city": "Lelant",
+                        "county": "Cornwall",
+                        "postcode": "TR27 6GN"
+                    },
+            "coordinates": {
+                "latitude": 52.2345,
+                "longitude": 1.2345
+            },
+            "location": {
+                "id": "38",
+                "name": "Lelant & Saltings Reach",
+                "slug": "lelant-saltings"
+            },
+            "sleeps": 6,
+            "bedrooms": {
+                "total": 3,
+                "superking": 0,
+                "king": 0,
+                "double": 1,
+                "twin": 2,
+                "zipnlock": 0,
+                "other": 0,
+                "information": ""
+            },
+            "bathrooms": {
+                "en-suite":1,
+                "standard":1,
+                "wc":1,
+                "other":0
+            },
+            "gemsRating": 4,
+            "goLiveDate": "2016-05-09",
+            "features": {
+                "pets": true,
+                "children": true,
+                "disabled": false,
+                "parking": true,
+                "wifi": true,
+                "crib": false,
+                "seaviews": false,
+                "closetobeach": true,
+                "woodburner": true,
+                "washingmachine": true,
+                "tumbledryer": false,
+                "pool": false,
+                "cot": true
             }
-        ]
+            "managed": true,
+            "minibreaks": true,
+            "boutique": true,
+            "changeOverDay": "Friday",
+            "checkInTime": "4:30pm",
+            "checkOutTime": "10:00am",
+            "images": [
+                {
+                    "filename": "001.jpg",
+                    "alt": "Pintail Cottage",
+                    "width": 640,
+                    "height": 480,
+                    "url": "https://assets.cornishgems.com/properties/pintail-cottage/001.jpg"
+                }
+            ],
+            "specialOffers": [
+                 {
+                    "discountCode": "X10250517X",
+                    "fromDate": "2017-05-25",
+                    "toDate": "2017-06-01",
+                    "description": "10% Discount for week commencing 25th May 2017",
+                    "type": "%",
+                    "amount": 10
+                 }
+            ],
+            "calendar": "http://pmsapi1.apiary.io/property/pintail-cottage/calendar",
+            "booking": "http://pmsapi1.apiary.io/booking"
+        }
 
 
 ## Retrieve a map of calendar data for a Property [/property/{property_slug}/availability]
