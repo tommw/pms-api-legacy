@@ -3,11 +3,13 @@ HOST: http://polls.apiblueprint.org/
 
 # PMS API
 
-Polls is a simple API allowing consumers to view polls and vote in them.
+Interface to consume data from the Property Management System
 
-## Questions Collection [/questions]
+# Group Property resources
 
-### List All Questions [GET]
+## A property is a lettable property [/property]
+
+### List all properties [GET]
 
 + Response 200 (application/json)
 
@@ -33,11 +35,236 @@ Polls is a simple API allowing consumers to view polls and vote in them.
             }
         ]
 
-### Create a New Question [POST]
+## A property is a lettable property [/property/{property_id}]
 
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
++ Parameters
+    + property_id (number) - reference ID of the property resource in the form of an integer
+
+### Retrieve an individual property resource [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "question": "Favourite programming language?",
+                "published_at": "2015-08-05T08:40:51.620Z",
+                "choices": [
+                    {
+                        "choice": "Swift",
+                        "votes": 2048
+                    }, {
+                        "choice": "Python",
+                        "votes": 1024
+                    }, {
+                        "choice": "Objective-C",
+                        "votes": 512
+                    }, {
+                        "choice": "Ruby",
+                        "votes": 256
+                    }
+                ]
+            }
+        ]
+
+
+## Retrieve a map of calendar data for a Property [/property/{property_slug}/availability]
+
++ Parameters
+    + property_slug (string) - reference ID of the property resource in the form of a string
+
+### Retrieve availability calendar data for a Property [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "question": "Favourite programming language?",
+                "published_at": "2015-08-05T08:40:51.620Z",
+                "choices": [
+                    {
+                        "choice": "Swift",
+                        "votes": 2048
+                    }, {
+                        "choice": "Python",
+                        "votes": 1024
+                    }, {
+                        "choice": "Objective-C",
+                        "votes": 512
+                    }, {
+                        "choice": "Ruby",
+                        "votes": 256
+                    }
+                ]
+            }
+        ]
+        
+## Retrieve customer feedback for a Property [/property/{property_slug}/feedback]
+
++ Parameters
+    + property_slug (string) - reference ID of the property resource in the form of a string
+
+### Feedback [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "question": "Favourite programming language?",
+                "published_at": "2015-08-05T08:40:51.620Z",
+                "choices": [
+                    {
+                        "choice": "Swift",
+                        "votes": 2048
+                    }, {
+                        "choice": "Python",
+                        "votes": 1024
+                    }, {
+                        "choice": "Objective-C",
+                        "votes": 512
+                    }, {
+                        "choice": "Ruby",
+                        "votes": 256
+                    }
+                ]
+            }
+        ]        
+
+## Retrieve bookings associated with a Property [/property/{property_slug}/booking]
+
++ Parameters
+    + property_slug (string) - reference ID of the property resource in the form of a string
+
+### Booking [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "question": "Favourite programming language?",
+                "published_at": "2015-08-05T08:40:51.620Z",
+                "choices": [
+                    {
+                        "choice": "Swift",
+                        "votes": 2048
+                    }, {
+                        "choice": "Python",
+                        "votes": 1024
+                    }, {
+                        "choice": "Objective-C",
+                        "votes": 512
+                    }, {
+                        "choice": "Ruby",
+                        "votes": 256
+                    }
+                ]
+            }
+        ]  
+
+## Retrieve weekly tariffs for a Property [/property/{property_slug}/tariff/{year}]
+
++ Parameters
+    + property_slug (string) - reference ID of the property resource in the form of a string
+    + year (number) - the year in the form of an integer
+
+### Tariff [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "question": "Favourite programming language?",
+                "published_at": "2015-08-05T08:40:51.620Z",
+                "choices": [
+                    {
+                        "choice": "Swift",
+                        "votes": 2048
+                    }, {
+                        "choice": "Python",
+                        "votes": 1024
+                    }, {
+                        "choice": "Objective-C",
+                        "votes": 512
+                    }, {
+                        "choice": "Ruby",
+                        "votes": 256
+                    }
+                ]
+            }
+        ]  
+        
+## Retrieve weekly tariffs for a Property [/property/{property_slug}/tariff/{year}/{month}]
+
++ Parameters
+    + property_slug (string) - reference ID of the property resource in the form of a string
+    + year (number) - full numeric representation of a year (4 digits) in the form of an integer
+    + month (number) - numeric representation of the month without leading zeros in the form of an integer 
+
+### Tariff [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "question": "Favourite programming language?",
+                "published_at": "2015-08-05T08:40:51.620Z",
+                "choices": [
+                    {
+                        "choice": "Swift",
+                        "votes": 2048
+                    }, {
+                        "choice": "Python",
+                        "votes": 1024
+                    }, {
+                        "choice": "Objective-C",
+                        "votes": 512
+                    }, {
+                        "choice": "Ruby",
+                        "votes": 256
+                    }
+                ]
+            }
+        ]         
+
+
+# Group Last minute offers
+
+## Last minute offers [/offer/lastminute]
+
+### Get a list of offers [GET]
+
++ Response 200
+
+        [
+            {
+                "type": "%",
+                "amount": 15
+                "daysToHolidayMin": 0,
+                "daysToHolidayMax": 7,
+                "description": "15% off bookings made within 7 days of the start date",
+                "properties": [
+                    "mousecott_SS"
+                ]
+            },
+            {
+                "type": "%",
+                "amount": 10
+                "daysToHolidayMin": 7,
+                "daysToHolidayMax": 14,
+                "description": "10% off bookings made between 8 and 14 days before the start date",
+                "properties": [
+                    "mousecott_SS"
+                ]
+            },
+        ]
+
+
+# Group Booking resources
+
+## Create a booking [/booking]
+
+Lorem ipsum...
+
+### Create a new booking [POST]
 
 + Request (application/json)
 
@@ -78,3 +305,297 @@ form of choices.
                     }
                 ]
             }
+            
+# Group Guest resources
+
+## Guest [/guest/{guest_id}]
+
++ Parameters
+    + guest_id (integer) - guest ID in the form of an integer
+
+### Get an individual customer [GET]
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /questions/2
+
+    + Body
+
+            {
+                "question": "Favourite programming language?",
+                "published_at": "2015-08-05T08:40:51.620Z",
+                "choices": [
+                    {
+                        "choice": "Swift",
+                        "votes": 0
+                    }, {
+                        "choice": "Python",
+                        "votes": 0
+                    }, {
+                        "choice": "Objective-C",
+                        "votes": 0
+                    }, {
+                        "choice": "Ruby",
+                        "votes": 0
+                    }
+                ]
+            }           
+            
+### Update a guest's details [PUT]   
+
++ Request (application/json)
+
+        {
+            "question": "Favourite programming language?",
+            "choices": [
+                "Swift",
+                "Python",
+                "Objective-C",
+                "Ruby"
+            ]
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /questions/2
+
+    + Body
+
+            {
+                "question": "Favourite programming language?",
+                "published_at": "2015-08-05T08:40:51.620Z",
+                "choices": [
+                    {
+                        "choice": "Swift",
+                        "votes": 0
+                    }, {
+                        "choice": "Python",
+                        "votes": 0
+                    }, {
+                        "choice": "Objective-C",
+                        "votes": 0
+                    }, {
+                        "choice": "Ruby",
+                        "votes": 0
+                    }
+                ]
+            }
+            
+## Guest bookings [/guest/{guest_id}/bookings]
+
++ Parameters
+    + guest_id (integer) - guest ID in the form of an integer
+
+### Get a list of bookings associated with a Guest [GET]
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /questions/2
+
+    + Body
+
+            {
+                "question": "Favourite programming language?",
+                "published_at": "2015-08-05T08:40:51.620Z",
+                "choices": [
+                    {
+                        "choice": "Swift",
+                        "votes": 0
+                    }, {
+                        "choice": "Python",
+                        "votes": 0
+                    }, {
+                        "choice": "Objective-C",
+                        "votes": 0
+                    }, {
+                        "choice": "Ruby",
+                        "votes": 0
+                    }
+                ]
+            }     
+            
+# Group Owner resources
+
+## Owner [/owner/JBLOG]
+
+### Get an owner [GET]
+
++ Response 200
+
+        {
+            "reference" : "JBLOG",
+            "brandCode" : "SS",
+            "accountingBrandCode" : "SS",
+            "name": {
+                "title": "Mr",
+                "firstName": "J",
+                "surname": "Bloggs",
+                "salutation": "Joe"
+            },
+            "address": {
+                "addr1": "Carlton House",
+                "addr2": "Market Place",
+                "town": "Reepham",
+                "county": "Norfolk",
+                "postcode": "NR10 4JJ",
+                "country": "GB"
+            },
+            "daytimePhone": "01603 871872",
+            "eveningPhone": "01603 872871",
+            "mobilePhone": "07999 123456",
+            "email": "support@carltonsoftware.co.uk",
+            "fax": "01603 871872",
+            "bankAccountDetails": {
+                "bankAccountName": "MR J BLOGGS",
+                "bankAccountNumber": "87560824",
+                "bankAccountSortCode": "12-34-56",
+                "bankName": "HSBC",
+                "bankAddress": {
+                    "addr1": "HSBC",
+                    "addr2": "Market Place",
+                    "town": "Reepham",
+                    "county": "Norfolk",
+                    "postcode": "NR10 4JJ",
+                    "country": "GB"
+                },
+                "bankReference": "",
+                "bankPaymentReference": "",
+                "vatNumber": "",
+                "vatRegistered": false
+            },
+            "postConfirmations": true,
+            "emailConfirmations": true,
+            "properties": [
+                {
+                    "reference": "mousecott",
+                    "brandCode": "SS"
+                }
+            ]
+        }
+
+
+### Update an owner [PUT]
+
++ Request (application/json)
+
+        {
+            "reference" : "JBLOG",
+            "brandCode" : "SS",
+            "accountingBrandCode" : "SS",
+            "name": {
+                "title": "Mr",
+                "firstName": "J",
+                "surname": "Bloggs",
+                "salutation": "Joe"
+            },
+            "address": {
+                "addr1": "Carlton House",
+                "addr2": "Market Place",
+                "town": "Reepham",
+                "county": "Norfolk",
+                "postcode": "NR10 4JJ",
+                "country": "GB"
+            },
+            "daytimePhone": "01603 871872",
+            "eveningPhone": "01603 872871",
+            "mobilePhone": "07999 123456",
+            "email": "support@carltonsoftware.co.uk",
+            "fax": "01603 871872",
+            "bankAccountDetails": {
+                "bankAccountName": "MR J BLOGGS",
+                "bankAccountNumber": "87560824",
+                "bankAccountSortCode": "12-34-56",
+                "bankName": "HSBC",
+                "bankAddress": {
+                    "addr1": "HSBC",
+                    "addr2": "Market Place",
+                    "town": "Reepham",
+                    "county": "Norfolk",
+                    "postcode": "NR10 4JJ",
+                    "country": "GB"
+                },
+                "bankReference": "",
+                "bankPaymentReference": "",
+                "vatNumber": "",
+                "vatRegistered": false
+            },
+            "postConfirmations": true,
+            "emailConfirmations": true,
+            "properties": [
+                {
+                    "reference": "mousecott",
+                    "brandCode": "SS"
+                }
+            ]
+        }
+
++ Response 204
+
+
+## Authenticate an owner [/owner/JBLOG/password/authenticate]
+
+### Authenticate an owner [PUT]
+
++ Request (application/json)
+
+        {
+            "password": "apassword"
+        }
+
++ Response 204
+
+
+## Set an owners password [/owner/JBLOG/password]
+
+### Set an owner password [PUT]
+
++ Request (application/json)
+
+        {
+            "password": "apassword"
+        }
+
++ Response 204
+
+
+## Owner documents [/owner/JBLOG/document]
+
+### Get a list of owner documents [GET]
+
++ Response 200
+
+        [
+            {
+                "id": 1,
+                "filename": "statement.pdf",
+                "mimetype": "application/pdf",
+                "type": "statement"
+            }
+        ]
+
+
+## Owner document [/owner/JBLOG/document/1]
+
+### Get a specific owner document [GET]
+
++ Response 200
+
+        {
+            "id": 1,
+            "filename": "statement.pdf",
+            "mimetype": "application/pdf",
+            "type": "statement"
+        }
+
+
+## Owner document [/owner/JBLOG/document/1/data]
+
+### Retrieve the document data [GET]
+
++ Response 200
