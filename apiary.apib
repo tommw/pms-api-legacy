@@ -215,14 +215,13 @@ passing in key/value pairs as parameters in the URL. If no filters are passed al
 
 
 ## Retrieve availability data for a Property [/property/{reference}/availability]
+The availability calendar for a property returns an array of date objects from the the first of the current month to
+the end of current availability. Please review the wiki for details on availability object.
 
 + Parameters
     + reference (string) - reference for the property resource in the form of a string
 
 ### Availability [GET]
-
-The availability calendar for a property returns an array of date objects from the the first of the current month to
-the end of current availability. Please review the wiki for details on availability object.i
 
 + Response 200 (application/json)
 
@@ -1796,72 +1795,145 @@ the end of current availability. Please review the wiki for details on availabil
    
         ]
         
-## Retrieve customer feedback for a Property [/property/{property_slug}/feedback]
+## Retrieve customer feedback for a Property [/property/{reference}/feedback]
+Endpoint for property feedback that has been set for public consumption.
 
 + Parameters
-    + property_slug (string) - reference ID of the property resource in the form of a string
+    + reference (string) - reference ID of the property resource in the form of a string
 
 ### Feedback [GET]
 
 + Response 200 (application/json)
 
+
         [
             {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
-            }
-        ]        
+                "date": "2015-09-21",
+                "name": "M Smith",
+                "guestId": 1234,
+                "bookingId": 5643,
+                "comment": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            },
+            {
+                "date": "2015-08-20",
+                "name": "J Blogs",
+                "guestId": 1325,
+                "bookingId": 5612,
+                "comment": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            },
+            {
+                "date": "2015-07-20",
+                "name": "ABC",
+                "guestId": 1621,
+                "bookingId": 4526,
+                "comment": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            },            
+        ]
 
-## Retrieve bookings associated with a Property [/property/{property_slug}/booking]
+## Retrieve bookings associated with a Property [/property/{reference}/booking]
 
 + Parameters
-    + property_slug (string) - reference ID of the property resource in the form of a string
+    + reference (string) - reference ID of the property resource in the form of a string
 
 ### Booking [GET]
 
 + Response 200 (application/json)
 
+
         [
             {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
+                "bookingId": 30312,
+                "guestId": 31600,
+                "added": "2017-04-01",
+                "confirmed": "2017-04-01",
+                "checkin": "2017-05-20",
+                "checkout": "2017-05-27",
+                "checkinTime": "4:30pm",
+                "status": "C",
+                "type": "M",
+                "contactInformation": {
+                    "primary": "07778787878",
+                    "secondary": "01234123123",
+                },
+                "partyDetails": {
+                    "adults": 2,
+                    "children": 2,
+                    "infants": 0,
+                    "dogs": 1
+                },
+                "tariff": {
+                    "total": 615.40,
+                    "deposit": 0,
+                    "balance": 615.40
+                }
+                "extras": [
                     {
-                        "choice": "Swift",
-                        "votes": 2048
+                        "extraId": "Pet01",
+                        "description": "Pet Supplement (Cornish Gem)",
+                        "comments": "1 x Pet Supplement (Cornish Gem)",
+                        "net": 24.17,
+                        "vat": 4.83,
+                        "gross": 29.00
+                    }
+                ],
+                "receipts": [
+                    {
+                        "receiptId": 55543,
+                        "date": "2017-04-01",
+                        "description": "Extras Paid",
+                        "method": "WPDC",
+                        "amount": 29.00
                     }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
+                        "receiptId": 55544,
+                        "date": "2017-04-01",
+                        "description": "Balance Paid",
+                        "method": "WPDC",
+                        "amount": 615.40
+                    }
+                ]
+            },
+            {
+                "bookingId": 29634,
+                "guestId": 28171,
+                "added": "2017-04-02",
+                "confirmed": "2017-04-03",
+                "checkin": "2017-06-10",
+                "checkout": "2017-06-17",
+                "checkinTime": "4:30pm",
+                "status": "C",
+                "type": "W",
+                "contactInformation": {
+                    "primary": "07778787878",
+                    "secondary": "01234123123",
+                },
+                "partyDetails": {
+                    "adults": 2,
+                    "children": 0,
+                    "infants": 1,
+                    "dogs": 0
+                },
+                "tariff": {
+                    "total": 939.00,
+                    "deposit": 313.00,
+                    "balance": 626.00
+                }
+                "extras": null,
+                "receipts": [
+                    {
+                        "receiptId": 55585,
+                        "date": "2017-04-02",
+                        "description": "Deposit Paid",
+                        "method": "WPDC",
+                        "amount": 313.00
                     }
                 ]
             }
-        ]  
+        ]
 
-## Retrieve weekly tariffs for a Property [/property/{property_slug}/tariff/{year}]
+## Retrieve weekly tariffs for a Property [/property/{reference}/tariff/{year}]
 
 + Parameters
-    + property_slug (string) - reference ID of the property resource in the form of a string
+    + reference (string) - reference ID of the property resource in the form of a string
     + year (number) - the year in the form of an integer
 
 ### Tariff [GET]
