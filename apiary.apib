@@ -1843,6 +1843,7 @@ Endpoint for property feedback that has been set for public consumption.
         [
             {
                 "bookingId": 30312,
+                "propertyId": 10006,
                 "guestId": 31600,
                 "added": "2017-04-01",
                 "confirmed": "2017-04-01",
@@ -2414,13 +2415,13 @@ also return the minibreak tariff that can be applied IF a minibreak is available
            }
         ]
         
-## Retrieve a month of tariffs for a Property [/property/{property_slug}/tariff/{year}/{month}]
+## Retrieve a month of tariffs for a Property [/property/{reference}/tariff/{year}/{month}]
 
 Returns the calendar for the requested month with standard and minibreak tariff for each day of the
 month where there is availability. If a discount is available this has already been applied to the tariff(s).
 
 + Parameters
-    + property_slug (string) - reference ID of the property resource in the form of a string
+    + reference (string) - reference ID of the property resource in the form of a string
     + year (number) - full numeric representation of a year (4 digits) in the form of an integer
     + month (number) - numeric representation of the month without leading zeros in the form of an integer 
 
@@ -2606,51 +2607,134 @@ month where there is availability. If a discount is available this has already b
 
 # Group Booking resources
 
-## Create a booking [/booking]
+## Create a provisional booking [/booking]
 
-Lorem ipsum...
+This is for consideration. Only guest data is stored within the PMS. Need to decide how to handle 
+remarketing of abandoned bookings for non guests.
 
 ### Create a new booking [POST]
 
 + Request (application/json)
 
         {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
+            "propertyId": 10006,
+            "checkin": "2017-08-01",
+            "checkout": "2017-08-08",
+            "adults": 2,
+            "children": 1,
+            "infants": 0,
+            "pets": 2
         }
 
 + Response 201 (application/json)
 
-    + Headers
 
-            Location: /questions/2
-
-    + Body
-
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
-                    }
-                ]
+        {
+            "bookingReference": 12341234,
+            "propertyId": 10006,
+            "guestId": null,
+            "added": "2017-05-26",
+            "checkin": "2017-08-01",
+            "checkout": "2017-08-08",
+            "checkinTime": "4:30pm",
+            "status": "P",
+            "type": "W",
+            "contactInformation": {
+                "primary": null,
+                "secondary": null,
+            },
+            "partyDetails": {
+                "adults": 2,
+                "children": 1,
+                "infants": 0,
+                "dogs": 2
+            },
+            "tariff": {
+                "total": 999.00,
+                "deposit": 333.00,
+                "balance": 666.00,
+                "extras": 29.00
             }
+            "extras": [
+                {
+                    "extraId": "Pet01",
+                    "description": "Pet Supplement (Cornish Gem)",
+                    "comments": "1 x Pet Supplement (Cornish Gem)",
+                    "net": 24.17,
+                    "vat": 4.83,
+                    "gross": 29.00
+                }
+            ],
+            "receipts": [ ],
+            "balanceDue": "2017-07-01"
+        }
+
+## Get a booking [/booking/{bookingReference}]
+
++ Parameters
+    + bookingReference (int) - reference ID of the booking as an integer
+
+### Get details of a booking [GET]
+
++ Response 200 (application/json)
+
+        {
+            "bookingReference": 12341234,
+            "propertyId": 10006,
+            "guestId": null,
+            "added": "2017-05-26",
+            "checkin": "2017-08-01",
+            "checkout": "2017-08-08",
+            "checkinTime": "4:30pm",
+            "status": "P",
+            "type": "W",
+            "contactInformation": {
+                "primary": null,
+                "secondary": null,
+            },
+            "partyDetails": {
+                "adults": 2,
+                "children": 1,
+                "infants": 0,
+                "dogs": 2
+            },
+            "tariff": {
+                "total": 999.00,
+                "deposit": 333.00,
+                "balance": 666.00,
+                "extras": 29.00
+            }
+            "extras": [
+                {
+                    "extraId": "Pet01",
+                    "description": "Pet Supplement (Cornish Gem)",
+                    "comments": "1 x Pet Supplement (Cornish Gem)",
+                    "net": 24.17,
+                    "vat": 4.83,
+                    "gross": 29.00
+                }
+            ],
+            "receipts": [ ],
+            "balanceDue": "2017-07-01"
+        }
+
+## Add guest to a booking [/booking/{bookingReference}/guest]
+
+### Add guest reference [PUT]
+
++ Request (application/json)
+
+        {
+            "guestId": 9021,
+            "contactInformation": {
+                "primary": "07878172172",
+                "secondary": "01234512313,
+            }
+        }
+
++ Response 204
+
+
             
 # Group Guest resources
 
