@@ -2607,10 +2607,11 @@ month where there is availability. If a discount is available this has already b
 
 # Group Booking resources
 
-## Create a provisional booking [/booking]
+Currently the booking data would be sent encrypted via the payment gateway to the APC file where the booking
+will be added to the PMS database. All other calls will return a 403 response. It should be assumed that currently
+*Create a new booking* and *Add guest reference* are not applicable.
 
-This is for consideration. Only guest data is stored within the PMS. Need to decide how to handle 
-remarketing of abandoned bookings for non guests.
+## Create a booking [/booking]
 
 ### Create a new booking [POST]
 
@@ -2669,6 +2670,22 @@ remarketing of abandoned bookings for non guests.
             "balanceDue": "2017-07-01"
         }
 
+## Add guest to a booking [/booking/{bookingReference}/guest]
+
+### Add guest reference [PUT]
+
++ Request (application/json)
+
+        {
+            "guestId": 9021,
+            "contactInformation": {
+                "primary": "07878172172",
+                "secondary": "01234512313,
+            }
+        }
+
++ Response 204
+
 ## Get a booking [/booking/{bookingReference}]
 
 + Parameters
@@ -2718,314 +2735,274 @@ remarketing of abandoned bookings for non guests.
             "balanceDue": "2017-07-01"
         }
 
-## Add guest to a booking [/booking/{bookingReference}/guest]
-
-### Add guest reference [PUT]
-
-+ Request (application/json)
-
-        {
-            "guestId": 9021,
-            "contactInformation": {
-                "primary": "07878172172",
-                "secondary": "01234512313,
-            }
-        }
-
-+ Response 204
 
 
             
 # Group Guest resources
 
-## Guest [/guest/{guest_id}]
+Client information will come from the CRM so requests regarding the customer name / address / preferences
+should be sent to this. The PMS API can provide information on guest bookings.
+            
+## Guest bookings [/guest/{guestId}/bookings]
 
 + Parameters
-    + guest_id (integer) - guest ID in the form of an integer
+    + guestId (integer) - the guest ID will be the customer reference used to identify the customer in the CRM in the form of an integer
 
-### Get an individual customer [GET]
+### Get all Guest bookings [GET]
 
-+ Response 201 (application/json)
++ Response 200 (application/json)
 
-    + Headers
-
-            Location: /questions/2
-
-    + Body
-
+        [
             {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
+                "bookingId": 30312,
+                "propertyId": 10006,
+                "guestId": 31600,
+                "added": "2017-04-01",
+                "confirmed": "2017-04-01",
+                "checkin": "2017-05-20",
+                "checkout": "2017-05-27",
+                "checkinTime": "4:30pm",
+                "status": "C",
+                "type": "M",
+                "contactInformation": {
+                    "primary": "07778787878",
+                    "secondary": "01234123123",
+                },
+                "partyDetails": {
+                    "adults": 2,
+                    "children": 2,
+                    "infants": 0,
+                    "dogs": 1
+                },
+                "tariff": {
+                    "total": 615.40,
+                    "deposit": 0,
+                    "balance": 615.40
+                }
+                "extras": [
                     {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
+                        "extraId": "Pet01",
+                        "description": "Pet Supplement (Cornish Gem)",
+                        "comments": "1 x Pet Supplement (Cornish Gem)",
+                        "net": 24.17,
+                        "vat": 4.83,
+                        "gross": 29.00
                     }
-                ]
-            }           
-            
-### Update a guest's details [PUT]   
-
-+ Request (application/json)
-
-        {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
-        }
-
-+ Response 201 (application/json)
-
-    + Headers
-
-            Location: /questions/2
-
-    + Body
-
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
+                ],
+                "receipts": [
                     {
-                        "choice": "Swift",
-                        "votes": 0
+                        "receiptId": 55543,
+                        "date": "2017-04-01",
+                        "description": "Extras Paid",
+                        "method": "WPDC",
+                        "amount": 29.00
                     }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
+                        "receiptId": 55544,
+                        "date": "2017-04-01",
+                        "description": "Balance Paid",
+                        "method": "WPDC",
+                        "amount": 615.40
                     }
                 ]
             }
-            
-## Guest bookings [/guest/{guest_id}/bookings]
-
-+ Parameters
-    + guest_id (integer) - guest ID in the form of an integer
-
-### Get a list of bookings associated with a Guest [GET]
-
-+ Response 201 (application/json)
-
-    + Headers
-
-            Location: /questions/2
-
-    + Body
-
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
-                    }
-                ]
-            }     
+        ]    
             
 # Group Owner resources
 
-## Owner [/owner/JBLOG]
+## Owner [/owner/{ownerId}]
+
++ Parameters
+    + ownerId (integer) - the owner ID will be the customer reference used to identify the customer in the CRM in the form of an integer
 
 ### Get an owner [GET]
 
 + Response 200
 
         {
-            "reference" : "JBLOG",
-            "brandCode" : "SS",
-            "accountingBrandCode" : "SS",
-            "name": {
-                "title": "Mr",
-                "firstName": "J",
-                "surname": "Bloggs",
-                "salutation": "Joe"
-            },
-            "address": {
-                "addr1": "Carlton House",
-                "addr2": "Market Place",
-                "town": "Reepham",
-                "county": "Norfolk",
-                "postcode": "NR10 4JJ",
-                "country": "GB"
-            },
-            "daytimePhone": "01603 871872",
-            "eveningPhone": "01603 872871",
-            "mobilePhone": "07999 123456",
-            "email": "support@carltonsoftware.co.uk",
-            "fax": "01603 871872",
-            "bankAccountDetails": {
-                "bankAccountName": "MR J BLOGGS",
-                "bankAccountNumber": "87560824",
-                "bankAccountSortCode": "12-34-56",
-                "bankName": "HSBC",
-                "bankAddress": {
-                    "addr1": "HSBC",
-                    "addr2": "Market Place",
-                    "town": "Reepham",
-                    "county": "Norfolk",
-                    "postcode": "NR10 4JJ",
-                    "country": "GB"
-                },
-                "bankReference": "",
-                "bankPaymentReference": "",
-                "vatNumber": "",
-                "vatRegistered": false
-            },
-            "postConfirmations": true,
-            "emailConfirmations": true,
-            "properties": [
-                {
-                    "reference": "mousecott",
-                    "brandCode": "SS"
-                }
-            ]
+            "onwerId" : 12345,
+            "balanceOnAccount": 1500.20,
+            "status": "A"
         }
 
+## Portfolio [/owner/{ownerId}/portfolio]
 
-### Update an owner [PUT]
++ Parameters
+    + ownerId (integer) - the owner ID will be the customer reference used to identify the customer in the CRM in the form of an integer
 
-+ Request (application/json)
-
-        {
-            "reference" : "JBLOG",
-            "brandCode" : "SS",
-            "accountingBrandCode" : "SS",
-            "name": {
-                "title": "Mr",
-                "firstName": "J",
-                "surname": "Bloggs",
-                "salutation": "Joe"
-            },
-            "address": {
-                "addr1": "Carlton House",
-                "addr2": "Market Place",
-                "town": "Reepham",
-                "county": "Norfolk",
-                "postcode": "NR10 4JJ",
-                "country": "GB"
-            },
-            "daytimePhone": "01603 871872",
-            "eveningPhone": "01603 872871",
-            "mobilePhone": "07999 123456",
-            "email": "support@carltonsoftware.co.uk",
-            "fax": "01603 871872",
-            "bankAccountDetails": {
-                "bankAccountName": "MR J BLOGGS",
-                "bankAccountNumber": "87560824",
-                "bankAccountSortCode": "12-34-56",
-                "bankName": "HSBC",
-                "bankAddress": {
-                    "addr1": "HSBC",
-                    "addr2": "Market Place",
-                    "town": "Reepham",
-                    "county": "Norfolk",
-                    "postcode": "NR10 4JJ",
-                    "country": "GB"
-                },
-                "bankReference": "",
-                "bankPaymentReference": "",
-                "vatNumber": "",
-                "vatRegistered": false
-            },
-            "postConfirmations": true,
-            "emailConfirmations": true,
-            "properties": [
-                {
-                    "reference": "mousecott",
-                    "brandCode": "SS"
-                }
-            ]
-        }
-
-+ Response 204
-
-
-## Authenticate an owner [/owner/JBLOG/password/authenticate]
-
-### Authenticate an owner [PUT]
-
-+ Request (application/json)
-
-        {
-            "password": "apassword"
-        }
-
-+ Response 204
-
-
-## Set an owners password [/owner/JBLOG/password]
-
-### Set an owner password [PUT]
-
-+ Request (application/json)
-
-        {
-            "password": "apassword"
-        }
-
-+ Response 204
-
-
-## Owner documents [/owner/JBLOG/document]
-
-### Get a list of owner documents [GET]
+### Get portfolio of properties for an owner [GET]
 
 + Response 200
 
         [
             {
-                "id": 1,
-                "filename": "statement.pdf",
-                "mimetype": "application/pdf",
-                "type": "statement"
+                "id": 10006,
+                "reference": "pintail-cottage",
+                "url": "http://private-5bb1f-pmsapi1.apiary-mock.com/property/pintail-cottage",
+                "slug": "pintail-cottage",
+                "name": "Pintail Cottage",
+                "status": "approved",
+                "sleeps": 6,
+                "managed": true
+            },
+            {
+                "id": 10121,
+                "reference": "pixie-cottage",
+                "url": "http://private-5bb1f-pmsapi1.apiary-mock.com/property/pixie-cottage",
+                "slug": "pixie-cottage",
+                "name": "Pixie Cottage",
+                "status": "approved",
+                "sleeps": 2,
+                "managed": true
             }
         ]
 
 
-## Owner document [/owner/JBLOG/document/1]
+## Owner statements [/owner/{ownerId}/statements]
 
-### Get a specific owner document [GET]
+Consume a list of statements available for an Owner resource. The ID is an encrypted string that can be used to call 
+the statement directly from the assets repository.
+
++ Parameters
+    + ownerId (integer) - the owner ID will be the customer reference used to identify the customer in the CRM in the form of an integer
+
+### Get a list of owner statements [GET]
 
 + Response 200
 
-        {
-            "id": 1,
-            "filename": "statement.pdf",
-            "mimetype": "application/pdf",
-            "type": "statement"
+        {"property":
+            [
+                {
+                    "id": "6f97f75b0b20170479d80e9d8cc0aa19a3d7c2",
+                    "propertyId":10006,
+                    "month": "2017-04",
+                    "mimetype": "application/pdf"
+                },
+                {
+                    "id": "6f97f75b0b20170479d80e9d8cc0aa19a3d7c3",
+                    "propertyId":10006,
+                    "month": "2017-03",
+                    "mimetype": "application/pdf"
+                },
+                {
+                    "id": "6f97f75b0b20170479d80e9d8cc0aa19a3d7c4",
+                    "propertyId":10121,
+                    "month": "2017-04",
+                    "mimetype": "application/pdf"
+                },
+                {
+                    "id": "6f97f75b0b20170479d80e9d8cc0aa19a3d7c5",
+                    "propertyId":10121,
+                    "month": "2017-03",
+                    "mimetype": "application/pdf"
+                }
+            ]
+        },
+        "owner": 
+            [
+                {
+                    "id": "6f97f75b0b20170479d80e9d8cc0aa19a3d71a",
+                    "month": "2017-04",
+                    "mimetype": "application/pdf"
+                },
+                {
+                    "id": "6f97f75b0b20170479d80e9d8cc0aa19a3d711",
+                    "month": "2017-03",
+                    "mimetype": "application/pdf"
+                },
+                {
+                    "id": "6f97f75b0b20170479d80e9d8cc0aa19a3d71s",
+                    "month": "2017-02",
+                    "mimetype": "application/pdf"
+                },
+                {
+                    "id": "6f97f75b0b20170479d80e9d8cc0aa19a3d71f",
+                    "month": "2017-01",
+                    "mimetype": "application/pdf"
+                }
+            ]
         }
 
 
-## Owner document [/owner/JBLOG/document/1/data]
+## Owner documents [/owner/{ownerId}/documents]
 
-### Retrieve the document data [GET]
+Consume a list of documents available for an Owner resource.
+
++ Parameters
+    + ownerId (integer) - the owner ID will be the customer reference used to identify the customer in the CRM in the form of an integer
+
+### Get a list of owner statements [GET]
 
 + Response 200
+
+        [
+            {
+                "name": "Owner Information Pack",
+                "id": "6f97f75b0b20170479d80e9d8cc0aa19a3fasa",
+                "mimetype": "application/pdf"
+            },
+            {
+                "name": "Service Comparison Table",
+                "id": "6f97f75b0b20170479d80e9d8cc0aa19a3qrwq",
+                "mimetype": "application/pdf"
+            },
+            {
+                "name": "Service Plan for XXX",
+                "id": "6f97f75b0b20170479d80e9d8cc0aa19a3d7as",
+                "mimetype": "application/pdf"
+            }
+        ]
+        
+## Owner bookings [/owner/{ownerId}/bookings]
+
++ Parameters
+    + ownerId (integer) - the owner ID will be the customer reference used to identify the customer in the CRM in the form of an integer
+
+### Get all Owner bookings [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "bookingId": 30422,
+                "propertyId": 10006,
+                "ownerId": 12345,
+                "added": "2017-05-01",
+                "confirmed": "2017-05-10",
+                "checkin": "2017-06-20",
+                "checkout": "2017-06-27",
+                "checkinTime": "4:30pm",
+                "status": "C",
+                "type": "O",
+                "contactInformation": {
+                    "primary": "07778787878",
+                    "secondary": "01234123123",
+                },
+                "extras": [
+                    {
+                        "extraId": "Pet01",
+                        "description": "Pet Supplement (Cornish Gem)",
+                        "comments": "1 x Pet Supplement (Cornish Gem)",
+                        "net": 24.17,
+                        "vat": 4.83,
+                        "gross": 29.00
+                    }
+                ]
+            },
+            {
+                "bookingId": 30122,
+                "propertyId": 10006,
+                "ownerId": 12345,
+                "added": "2016-06-01",
+                "confirmed": "2016-06-03",
+                "checkin": "2016-12-01",
+                "checkout": "2016-12-10",
+                "checkinTime": "4:30pm",
+                "status": "C",
+                "type": "O",
+                "contactInformation": {
+                    "primary": "07778787878",
+                    "secondary": "01234123123",
+                },
+                "extras": null
+            }            
+        ]
