@@ -224,8 +224,8 @@ the end of current availability. Please review the wiki for details on availabil
 ### Availability [GET]
 
 + Response 200 (application/json)
-
-        [
+    
+        {
         "2017-05-01":{
           "peak":0,
           "status":"C",
@@ -1792,8 +1792,7 @@ the end of current availability. Please review the wiki for details on availabil
           "daysToNextBooking":366,
           "bookingType":""
         }
-   
-        ]
+        }
         
 ## Retrieve customer feedback for a Property [/property/{reference}/feedback]
 Endpoint for property feedback that has been set for public consumption.
@@ -1806,7 +1805,7 @@ Endpoint for property feedback that has been set for public consumption.
 + Response 200 (application/json)
 
 
-        [
+        {
             {
                 "date": "2015-09-21",
                 "name": "M Smith",
@@ -1828,7 +1827,7 @@ Endpoint for property feedback that has been set for public consumption.
                 "bookingId": 4526,
                 "comment": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
             },            
-        ]
+        }
 
 ## Retrieve bookings associated with a Property [/property/{reference}/booking]
 
@@ -1839,97 +1838,98 @@ Endpoint for property feedback that has been set for public consumption.
 
 + Response 200 (application/json)
 
-
-        [
-            {
-                "bookingId": 30312,
-                "propertyId": 10006,
-                "guestId": 31600,
-                "added": "2017-04-01",
-                "confirmed": "2017-04-01",
-                "checkin": "2017-05-20",
-                "checkout": "2017-05-24",
-                "checkinTime": "4:30pm",
-                "status": "B",
-                "type": "M",
-                "contactInformation": {
-                    "primary": "07778787878",
-                    "secondary": "01234123123",
+        {
+            [
+                {
+                    "bookingId": 30312,
+                    "propertyId": 10006,
+                    "guestId": 31600,
+                    "added": "2017-04-01",
+                    "confirmed": "2017-04-01",
+                    "checkin": "2017-05-20",
+                    "checkout": "2017-05-24",
+                    "checkinTime": "4:30pm",
+                    "status": "B",
+                    "type": "M",
+                    "contactInformation": {
+                        "primary": "07778787878",
+                        "secondary": "01234123123",
+                    },
+                    "partyDetails": {
+                        "adults": 2,
+                        "children": 2,
+                        "infants": 0,
+                        "dogs": 1
+                    },
+                    "tariff": {
+                        "total": 615.40,
+                        "deposit": 0,
+                        "balance": 615.40
+                    }
+                    "extras": [
+                        {
+                            "extraId": "Pet01",
+                            "description": "Pet Supplement (Cornish Gem)",
+                            "comments": "1 x Pet Supplement (Cornish Gem)",
+                            "net": 24.17,
+                            "vat": 4.83,
+                            "gross": 29.00
+                        }
+                    ],
+                    "receipts": [
+                        {
+                            "receiptId": 55543,
+                            "date": "2017-04-01",
+                            "description": "Extras Paid",
+                            "method": "WPDC",
+                            "amount": 29.00
+                        }, {
+                            "receiptId": 55544,
+                            "date": "2017-04-01",
+                            "description": "Balance Paid",
+                            "method": "WPDC",
+                            "amount": 615.40
+                        }
+                    ]
                 },
-                "partyDetails": {
-                    "adults": 2,
-                    "children": 2,
-                    "infants": 0,
-                    "dogs": 1
-                },
-                "tariff": {
-                    "total": 615.40,
-                    "deposit": 0,
-                    "balance": 615.40
+                {
+                    "bookingId": 29634,
+                    "guestId": 28171,
+                    "added": "2017-04-02",
+                    "confirmed": "2017-04-03",
+                    "checkin": "2017-06-10",
+                    "checkout": "2017-06-17",
+                    "checkinTime": "4:30pm",
+                    "status": "B",
+                    "type": "S",
+                    "contactInformation": {
+                        "primary": "07778787878",
+                        "secondary": "01234123123",
+                    },
+                    "partyDetails": {
+                        "adults": 2,
+                        "children": 0,
+                        "infants": 1,
+                        "dogs": 0
+                    },
+                    "tariff": {
+                        "total": 939.00,
+                        "deposit": 313.00,
+                        "balance": 626.00
+                    }
+                    "extras": null,
+                    "receipts": [
+                        {
+                            "receiptId": 55585,
+                            "date": "2017-04-02",
+                            "description": "Deposit Paid",
+                            "method": "WPDC",
+                            "amount": 313.00
+                        }
+                    ]
                 }
-                "extras": [
-                    {
-                        "extraId": "Pet01",
-                        "description": "Pet Supplement (Cornish Gem)",
-                        "comments": "1 x Pet Supplement (Cornish Gem)",
-                        "net": 24.17,
-                        "vat": 4.83,
-                        "gross": 29.00
-                    }
-                ],
-                "receipts": [
-                    {
-                        "receiptId": 55543,
-                        "date": "2017-04-01",
-                        "description": "Extras Paid",
-                        "method": "WPDC",
-                        "amount": 29.00
-                    }, {
-                        "receiptId": 55544,
-                        "date": "2017-04-01",
-                        "description": "Balance Paid",
-                        "method": "WPDC",
-                        "amount": 615.40
-                    }
-                ]
-            },
-            {
-                "bookingId": 29634,
-                "guestId": 28171,
-                "added": "2017-04-02",
-                "confirmed": "2017-04-03",
-                "checkin": "2017-06-10",
-                "checkout": "2017-06-17",
-                "checkinTime": "4:30pm",
-                "status": "B",
-                "type": "S",
-                "contactInformation": {
-                    "primary": "07778787878",
-                    "secondary": "01234123123",
-                },
-                "partyDetails": {
-                    "adults": 2,
-                    "children": 0,
-                    "infants": 1,
-                    "dogs": 0
-                },
-                "tariff": {
-                    "total": 939.00,
-                    "deposit": 313.00,
-                    "balance": 626.00
-                }
-                "extras": null,
-                "receipts": [
-                    {
-                        "receiptId": 55585,
-                        "date": "2017-04-02",
-                        "description": "Deposit Paid",
-                        "method": "WPDC",
-                        "amount": 313.00
-                    }
-                ]
-            }
-        ]
+            ]
+        }
 
 ## Retrieve weekly tariffs for a year for a Property [/property/{reference}/tariff/{year}]
 
@@ -2429,7 +2429,7 @@ month where there is availability. If a discount is available this has already b
 
 + Response 200 (application/json)
 
-        [
+        {
            "2017-05-01":{
               "status":"B"
            },
@@ -2570,7 +2570,7 @@ month where there is availability. If a discount is available this has already b
                  "discountRate":"20%"
               }
            }
-        ]
+        }
 
 
 # Group Last minute offers
