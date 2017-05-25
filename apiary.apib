@@ -8,10 +8,11 @@ https://github.com/tommw/pms-api/wiki
 
 # Group Property resources
 
-## A Property resource represents a holiday cottage [/property]
+## A Property resource - a holiday cottage [/property]
 
-The property endpoint can be used for all searches - either availability searches or feature searches. Filtering can be done by
+Use property endpoint for all searches - either availability searches or feature searches. Filtering can be done by
 passing in key/value pairs as parameters in the URL. If no filters are passed all currently *approved* properties will be returned. 
+https://github.com/tommw/pms-api/wiki/Property-Search
 
 ### List/Search all properties [GET]
 
@@ -118,7 +119,7 @@ passing in key/value pairs as parameters in the URL. If no filters are passed al
         }
 
 
-## Retrieve a property resource [/property/{reference}]
+## Get a property resource [/property/{reference}]
 
 + Parameters
     + reference (string) - reference for the property resource in the form of a string
@@ -184,7 +185,7 @@ passing in key/value pairs as parameters in the URL. If no filters are passed al
                 "tumbledryer": false,
                 "pool": false,
                 "cot": true
-            }
+            },
             "managed": true,
             "minibreaks": true,
             "boutique": true,
@@ -217,7 +218,7 @@ passing in key/value pairs as parameters in the URL. If no filters are passed al
 
 ## Retrieve availability data for a Property [/property/{reference}/availability]
 The availability calendar for a property returns an array of date objects from the the first of the current month to
-the end of current availability. Please review the wiki for details on availability object.
+the end of current availability. https://github.com/tommw/pms-api/wiki/Availability
 
 + Parameters
     + reference (string) - reference for the property resource in the form of a string
@@ -1807,6 +1808,7 @@ Endpoint for property feedback that has been set for public consumption.
 
 
         {
+        [
             {
                 "date": "2015-09-21",
                 "name": "M Smith",
@@ -1827,10 +1829,11 @@ Endpoint for property feedback that has been set for public consumption.
                 "guestId": 1621,
                 "bookingId": 4526,
                 "comment": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-            },            
+            }
+            ]
         }
 
-## Retrieve bookings associated with a Property [/property/{reference}/booking]
+## Retrieve all bookings for a Property [/property/{reference}/booking]
 
 + Parameters
     + reference (string) - reference ID of the property resource in the form of a string
@@ -1936,6 +1939,7 @@ Endpoint for property feedback that has been set for public consumption.
 
 This will provide the week on week standard tariff for the property. If minibreaks are available it will
 also return the minibreak tariff that can be applied IF a minibreak is available on any particular day.
+https://github.com/tommw/pms-api/wiki/Tariffs-Calendar
 
 + Parameters
     + reference (string) - reference ID of the property resource in the form of a string
@@ -2420,6 +2424,7 @@ also return the minibreak tariff that can be applied IF a minibreak is available
 
 Returns the calendar for the requested month with standard and minibreak tariff for each day of the
 month where there is availability. If a discount is available this has already been applied to the tariff(s).
+https://github.com/tommw/pms-api/wiki/Tariffs-Calendar
 
 + Parameters
     + reference (string) - reference ID of the property resource in the form of a string
@@ -2575,6 +2580,8 @@ month where there is availability. If a discount is available this has already b
 
 
 # Group Last minute offers
+
+All available last minute offers and an array of properties (by propertyId) that the offers are applicable for.
 
 ## Last minute offers [/offer/lastminute]
 
