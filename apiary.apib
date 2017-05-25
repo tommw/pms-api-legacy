@@ -7,7 +7,7 @@ Interface to consume data from the Property Management System
 
 # Group Property resources
 
-## Property resources represent each holiday cottage available to let [/property]
+## A Property resource represents a holiday cottage [/property]
 
 The property endpoint can be used for all searches - either availability searches or feature searches. Filtering can be done by
 passing in key/value pairs as parameters in the URL. If no filters are passed all currently *approved* properties will be returned. 
@@ -1848,9 +1848,9 @@ Endpoint for property feedback that has been set for public consumption.
                 "added": "2017-04-01",
                 "confirmed": "2017-04-01",
                 "checkin": "2017-05-20",
-                "checkout": "2017-05-27",
+                "checkout": "2017-05-24",
                 "checkinTime": "4:30pm",
-                "status": "C",
+                "status": "B",
                 "type": "M",
                 "contactInformation": {
                     "primary": "07778787878",
@@ -1901,8 +1901,8 @@ Endpoint for property feedback that has been set for public consumption.
                 "checkin": "2017-06-10",
                 "checkout": "2017-06-17",
                 "checkinTime": "4:30pm",
-                "status": "C",
-                "type": "W",
+                "status": "B",
+                "type": "S",
                 "contactInformation": {
                     "primary": "07778787878",
                     "secondary": "01234123123",
@@ -2585,23 +2585,13 @@ month where there is availability. If a discount is available this has already b
             {
                 "type": "%",
                 "amount": 15
-                "daysToHolidayMin": 0,
-                "daysToHolidayMax": 7,
-                "description": "15% off bookings made within 7 days of the start date",
+                "dateFrom": "2017-05-01",
+                "dateTo": "2017-05-31",
+                "description": "15% off for May",
                 "properties": [
-                    "mousecott_SS"
+                    10006, 10101, 10201, 10331, 10441
                 ]
-            },
-            {
-                "type": "%",
-                "amount": 10
-                "daysToHolidayMin": 7,
-                "daysToHolidayMax": 14,
-                "description": "10% off bookings made between 8 and 14 days before the start date",
-                "properties": [
-                    "mousecott_SS"
-                ]
-            },
+            }
         ]
 
 
@@ -2639,7 +2629,7 @@ will be added to the PMS database. All other calls will return a 403 response. I
             "checkout": "2017-08-08",
             "checkinTime": "4:30pm",
             "status": "P",
-            "type": "W",
+            "type": "S",
             "contactInformation": {
                 "primary": null,
                 "secondary": null,
@@ -2704,7 +2694,7 @@ will be added to the PMS database. All other calls will return a 403 response. I
             "checkout": "2017-08-08",
             "checkinTime": "4:30pm",
             "status": "P",
-            "type": "W",
+            "type": "S",
             "contactInformation": {
                 "primary": null,
                 "secondary": null,
@@ -2762,7 +2752,7 @@ should be sent to this. The PMS API can provide information on guest bookings.
                 "checkin": "2017-05-20",
                 "checkout": "2017-05-27",
                 "checkinTime": "4:30pm",
-                "status": "C",
+                "status": "B",
                 "type": "M",
                 "contactInformation": {
                     "primary": "07778787878",
@@ -2971,7 +2961,7 @@ Consume a list of documents available for an Owner resource.
                 "checkin": "2017-06-20",
                 "checkout": "2017-06-27",
                 "checkinTime": "4:30pm",
-                "status": "C",
+                "status": "B",
                 "type": "O",
                 "contactInformation": {
                     "primary": "07778787878",
@@ -2997,7 +2987,7 @@ Consume a list of documents available for an Owner resource.
                 "checkin": "2016-12-01",
                 "checkout": "2016-12-10",
                 "checkinTime": "4:30pm",
-                "status": "C",
+                "status": "B",
                 "type": "O",
                 "contactInformation": {
                     "primary": "07778787878",
@@ -3006,3 +2996,76 @@ Consume a list of documents available for an Owner resource.
                 "extras": null
             }            
         ]
+        
+# Group Owner Booking resources
+
+## Create an owner booking [/ownerbooking]
+
+### Create a new booking [POST]
+
++ Request (application/json)
+
+        {
+            "propertyId": 10006,
+            "checkin": "2017-08-01",
+            "checkout": "2017-08-08",
+            "welcomePack": true,
+            "comments": "Please can you make up the Zip and Lock bed"
+        }
+
++ Response 201 (application/json)
+
+
+        {
+            "bookingReference": 12341234,
+            "propertyId": 10006,
+            "guestId": "12345,
+            "added": "2017-05-26",
+            "checkin": "2017-08-01",
+            "checkout": "2017-08-08",
+            "checkinTime": "4:30pm",
+            "status": "P",
+            "type": "O",
+            "extras": [
+                {
+                    "extraId": "OWP",
+                    "description": "Owner Welcome Pack",
+                    "comments": "",
+                    "net": 24.17,
+                    "vat": 4.83,
+                    "gross": 29.00
+                }
+            ],
+            "comments": "Please can you make up the Zip and Lock bed"
+        }
+
+## Retrieve an owner booking [/ownerbooking/{bookingReference}]
+
++ Parameters
+    + bookingReference (int) - reference ID of the booking as an integer
+
+### Get details of an owner booking [GET]
+
++ Response 200 (application/json)
+
+        {
+            "bookingReference": 12341234,
+            "propertyId": 10006,
+            "guestId": "12345,
+            "added": "2017-05-26",
+            "checkin": "2017-08-01",
+            "checkout": "2017-08-08",
+            "checkinTime": "4:30pm",
+            "status": "P",
+            "type": "O",
+            "extras": [
+                {
+                    "extraId": "OWP",
+                    "description": "Owner Welcome Pack",
+                    "comments": "",
+                    "net": 24.17,
+                    "vat": 4.83,
+                    "gross": 29.00
+                }
+            ],
+            "comments": "Please can you make up the Zip and Lock bed"
