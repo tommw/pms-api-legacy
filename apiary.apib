@@ -2733,7 +2733,49 @@ will be added to the PMS database. All other calls will return a 403 response. I
             "balanceDue": "2017-07-01"
         }
 
+## Get available extras for booking [/booking/{bookingReference}/extras]
 
++ Parameters
+    + bookingReference (int) - reference ID of the booking as an integer
+
+### Get a list of extras [GET]
+
++ Response 200 (application/json)
+
+        {
+            "bookingReference": 12341234,
+            "extras": [
+                {
+                    "extraId": "Pet01",
+                    "description": "Pet Supplement (Cornish Gem)",
+                    "comments": "1 x Pet Supplement (Cornish Gem)",
+                    "net": 24.17,
+                    "vat": 4.83,
+                    "gross": 29.00
+                },
+                {
+                    "extraId": "PCI",
+                    "description": "Early checkin",
+                    "comments": "",
+                    "net": 8.00,
+                    "vat": 2.00,
+                    "gross": 10.00
+                }              
+            ]
+        }
+        
+## Add an extra to a booking [/booking/{bookingReference}/extra]
+
+### Add an extra [PUT]
+
++ Request (application/json)
+
+        {
+            "extraId": "Pet01",
+            "volume": 1
+        }
+
++ Response 204        
 
             
 # Group Guest resources
